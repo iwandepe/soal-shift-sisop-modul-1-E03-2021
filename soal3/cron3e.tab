@@ -1,0 +1,2 @@
+0 7 * * 1-5 bash /home/vika/soal3d.sh
+0 18 * * 1-5 cd /home/vika/ && unzip -P $(date +"\%m\%d\%Y") Koleksi.zip && rm Koleksi.zip
