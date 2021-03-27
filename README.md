@@ -47,9 +47,9 @@ if [[ ${BASH_REMATCH[1]} == "ERROR" ]]
 		((userErrors['${BASH_REMATCH[3]}']++))
 	else
 		((userInfo['${BASH_REMATCH[3]}']++))
-	fi
+fi
 ```
-Kemudian tipe log yang tersimpan di index kedua `BASH_REMATCH` akan diperiksa. Bila nilainya `ERROR`, maka nilai elemen array `errors` yang mempunyai key pesan error yang tersimpan di index ketiga `BASH_REMATCH` dan nilai elemen array `userErrors` yang mempunyai key username yang tersimpan di index keempat juga akan di-increment. Bila nilainya bukan `ERROR` atau berarti bertipe `INFO`, maka nilai elemen array `userInfo` yang mempunyai key username di-increment. Variable yang unset akan bernilai 0, sehingga tidak perlu mengecek apakah key tersebut sudah ada di array.
+Kemudian tipe log yang tersimpan di index kedua `BASH_REMATCH` akan diperiksa. Bila nilainya `ERROR`, maka nilai elemen array `errors` yang mempunyai key pesan error yang tersimpan di index ketiga `BASH_REMATCH` dan nilai elemen array `userErrors` yang mempunyai key username yang tersimpan di index keempat akan di-increment. Bila nilainya bukan `ERROR` atau berarti bertipe `INFO`, maka nilai elemen array `userInfo` yang mempunyai key username di-increment. Variable yang unset akan bernilai `0`, sehingga tidak perlu mengecek apakah key tersebut sudah ada di array.
 
 ```bash
 echo "Error,Count" > error_message.csv
@@ -75,7 +75,7 @@ do
 	printf "%s,%d,%d\n" "$key" "${userInfo[$key]}" "${userErrors[$key]}" 
 done | sort -u >> user_statistic.csv
 ```
-Juga mirip seperti sebelumnya tetapi di kode ini akan melakukan loop untuk setiap key di 2 array, yaitu `userErrors` dan `userInfo`, dan menuliskan nilai dari `$key`, `${userInfo[$key]}`, `${userErrors[$key]}`. Hal ini dilakukan agar bila ada username yang hanya mempunyai log bertipe INFO atau ERROR saja tetap akan tertulis. Kemudian hasil dari loop akan di-sort dan ditambahkan ke file `user_statistic.csv`. Karena username bisa saja mempunyai log INFO dan ERROR dan menghasilkan baris yang sama, maka perlu menambah option `-u` di sort untuk menghapus baris yang duplikat.
+Juga mirip seperti sebelumnya tetapi di kode ini akan melakukan loop untuk setiap key di 2 array, yaitu `userErrors` dan `userInfo`, dan menuliskan nilai dari `$key`, `${userInfo[$key]}`, `${userErrors[$key]}`. Hal ini dilakukan agar bila ada username yang hanya mempunyai log bertipe `INFO` atau `ERROR` saja tetap akan tertulis. Kemudian hasil dari loop akan di-sort dan ditambahkan ke file `user_statistic.csv`. Karena username bisa saja mempunyai log `INFO` dan `ERROR` sehingga menghasilkan baris yang sama, maka perlu menambah option `-u` di sort untuk menghapus baris yang duplikat.
 
 ## Soal 2
 ### Penjelasan soal
