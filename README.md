@@ -91,6 +91,7 @@ Cost Price didapatkan dari pengurangan Sales dengan Profit. (Quantity diabaikan)
 1. kamu diharapkan bisa membuat sebuah script yang akan menghasilkan file “hasil.txt” yang memiliki format sebagai berikut:
 
 ### Penyelesaian
+**Soal 2a**
 ```bash
 #!/bin/bash
 
@@ -111,7 +112,11 @@ END {
 ' Laporan-TokoShiSop.tsv >> hasil.txt
 
 echo '' >> hasil.txt
+```
+Pada soal nomor 2a dicari order dengan persentase keuntungan terbesar. Hal ini dapat diselesaikan dengan awk, pertama diinisialisasikan tersebih dahulu max_percentage=0. Lalu mengecek file laporan pada setiap baris, jika ditemukan persentase keuntungan yang lebih besar, maka data akan diubah. Selanjutnya ketika program sudah mengecek semua baris, akan dioutputkan order id dan persentase keuntungannya. Kode NR>1 menunjukkan bahwa program hanya akan mengecek laporan mulai dari baris kedua, karena pada baris pertama berisi keterangan dari kolom.
 
+**Soal 2b**
+```bash
 awk -F $'\t' '
 BEGIN {
 	print("Daftar nama customer di Albuquerque pada tahun 2017 antara lain: ")
@@ -122,7 +127,11 @@ BEGIN {
 ' Laporan-TokoShiSop.tsv | uniq >> hasil.txt
 
 echo '' >> hasil.txt
+```
+Pada soal nomor 2b dicari nama customer yang membuat order di Albuquerque pada tahun 2017. Penyelesaian dilakukan dengan mengecek pada setiap baris, jika ada yang memiliki nilai 2017 (menunjukkan order dilakukan pada tahun 2017) dan memiliki tempat di Albuqueque maka akan di-print nama customer pada baris tersebut.
 
+**Soal 2c**
+```bash
 awk -F $'\t' '
 BEGIN {
 	min=1000000; 
@@ -143,7 +152,11 @@ END {
 ' Laporan-TokoShiSop.tsv >> hasil.txt
 
 echo '' >> hasil.txt
+```
+Pada soal nomor 2c dicari segment dengan nilai transaksi minimum. Penyelesaian dilakukan dengan menginisialisasi terlebih dahulu variabel min dengan nilai yang besar. Selanjutnya pada setiap baris data akan diakumulasikan nilai dari jumlah transaksi dari setiap value lalu dimasukkan ke dalam sebuah array. Pada akhir program, akan dicek segment mana yang memiliki jumlah transaksi paling minimum lalu hasilnya dicetak sesuai perintah soal.
 
+**Soal 2d**
+```bash
 awk -F $'\t' '
 BEGIN {
 	min_profit=99999999; 
@@ -163,6 +176,8 @@ END {
 }
 ' Laporan-TokoShiSop.tsv >> hasil.txt
 ```
+Pada soal nomor 2d dicari wilayah dengan total keuntungan paling sedikit. Penyelaian dilakukan dengan menginisialisasi terlebih dahulu nilai min_profit dengan nilai yang cukup besar. Lalu pada setiap baris data akan diakumulasikan keuntungan dari tiap wilayah dan dimasukkan ke dalam sebuah array. Pada akhir program, akan dicari dengan looping wilayah mana dalam array yang memilliki jumlah profit paling minimal, lalu hasilnya dicetak sesuai permintaan soal.
+
 ## Soal 3
 Kuuhaku adalah orang yang sangat suka mengoleksi foto-foto digital, namun Kuuhaku juga merupakan seorang yang pemalas sehingga ia tidak ingin repot-repot mencari foto, selain itu ia juga seorang pemalu, sehingga ia tidak ingin ada orang yang melihat koleksinya tersebut, sayangnya ia memiliki teman bernama Steven yang memiliki rasa kepo yang luar biasa. Kuuhaku pun memiliki ide agar Steven tidak bisa melihat koleksinya, serta untuk mempermudah hidupnya, yaitu dengan meminta bantuan kalian. Idenya adalah :
 1. Membuat script untuk mengunduh 23 gambar dari "https://loremflickr.com/320/240/kitten" serta menyimpan log-nya ke file "Foto.log". Karena gambar yang diunduh acak, ada kemungkinan gambar yang sama terunduh lebih dari sekali, oleh karena itu kalian harus menghapus gambar yang sama (tidak perlu mengunduh gambar lagi untuk menggantinya). Kemudian menyimpan gambar-gambar tersebut dengan nama "Koleksi_XX" dengan nomor yang berurutan tanpa ada nomor yang hilang (contoh : Koleksi_01, Koleksi_02, ...)
