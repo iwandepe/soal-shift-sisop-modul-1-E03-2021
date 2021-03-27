@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# soal 2a
 awk -F $'\t' '
 BEGIN {
 	max_percentage=0;
@@ -18,6 +19,7 @@ END {
 
 echo '' >> hasil.txt
 
+# soal 2b
 awk -F $'\t' '
 BEGIN {
 	print("Daftar nama customer di Albuquerque pada tahun 2017 antara lain: ")
@@ -29,6 +31,7 @@ BEGIN {
 
 echo '' >> hasil.txt
 
+# soal 2c
 awk -F $'\t' '
 BEGIN {
 	min=1000000; 
@@ -50,6 +53,7 @@ END {
 
 echo '' >> hasil.txt
 
+# soal 2d
 awk -F $'\t' '
 BEGIN {
 	min_profit=99999999; 
