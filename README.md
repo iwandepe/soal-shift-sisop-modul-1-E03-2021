@@ -8,44 +8,74 @@ Ryujin baru saja diterima sebagai IT support di perusahaan Bukapedia. Dia diberi
 1. Ryujin juga harus dapat menampilkan jumlah kemunculan log ERROR dan INFO untuk setiap user-nya. Setelah semua informasi yang diperlukan telah disiapkan, kini saatnya Ryujin menuliskan semua informasi tersebut ke dalam laporan dengan format file csv.
 1. Semua informasi yang didapatkan pada poin b dituliskan ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak.
 1. Semua informasi yang didapatkan pada poin c dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.
+
 #### Penyelesaian
 ```bash
-#!/bin/bash
-
 file="./syslog.log"
+```
+Pertama, path dari `syslog.log` disimpan ke sebuah variable bernama `file`.
+
+```bash
 regex='.+: (INFO|ERROR) (.+) \((.+)\)'
+```
+Regex yang dipakai juga disimpan ke variable bernama `regex`. Regex ini akan melakukan capture 3 hal, yaitu tipe log, pesan, dan usernamenya.
+
+```bash
 declare -A errors
 declare -A userErrors
 declare -A userInfo
+```
+Kemudian 3 buah associative array dideklarasikan. 3 array ini akan menyimpan jumlah error per jenisnya, jumlah error per username, dan jumlah info per username.
 
+```bash
 while read -r line
 do
-	[[ $line =~ $regex ]]
+	...
+done < "$file"
+```
+While loop ini akan membaca `$file` baris per baris dan disimpan ke variable `$line`.
 
-	if [[ ${BASH_REMATCH[1]} == "ERROR" ]]
+```bash
+[[ $line =~ $regex ]]
+```
+String di variable `$line` kemudian diperiksa terhadap `$regex`. Bila sesuai, string tersebut kemudian akan tersimpan di array `BASH_REMATCH` bersama dengan string yang ter-capture.
+
+```bash
+if [[ ${BASH_REMATCH[1]} == "ERROR" ]]
 	then
 		((errors['${BASH_REMATCH[2]}']++))
 		((userErrors['${BASH_REMATCH[3]}']++))
 	else
 		((userInfo['${BASH_REMATCH[3]}']++))
 	fi
-done < "$file"
+```
+Kemudian tipe log yang tersimpan di index kedua `BASH_REMATCH` akan diperiksa. Bila nilainya `ERROR`, maka nilai elemen array `errors` yang mempunyai key pesan error yang tersimpan di index ketiga `BASH_REMATCH` dan nilai elemen array `userErrors` yang mempunyai key username yang tersimpan di index keempat juga akan di-increment. Bila nilainya bukan `ERROR` atau berarti bertipe `INFO`, maka nilai elemen array `userInfo` yang mempunyai key username di-increment. Variable yang unset akan bernilai 0, sehingga tidak perlu mengecek apakah key tersebut sudah ada di array.
 
+```bash
 echo "Error,Count" > error_message.csv
+```
+Baris ini akan membuat file `error_message.csv` bila belum ada atau menimpa file tersebut bila sudah ada. Kemudian akan menulis `Error,Count` di file tersebut.
+
+```bash
 for key in "${!errors[@]}"
 do
 	printf "%s,%d\n" "$key" "${errors[$key]}" 
 done | sort -rn -t , -k 2 >> error_message.csv
+```
+Kode ini akan melakukan loop untuk setiap key di array `errors`. Di setiap loopnya, akan menuliskan nilai dari `$key` dan `${errors[$key]}`. Jika sudah selesai, maka akan dilakukan sort dan akan ditambahkan ke file `error_message.csv`. Option `-rn` akan melakukan sort secara descending dan numerik, `-t ,` akan mengganti field separator menjadi koma dan `-k 2` berarti sort dilakukan berdasarkan field kedua.
 
+```bash
 echo "Username,INFO,ERROR" > user_statistic.csv
+```
+Mirip seperti sebelumnya, baris ini akan membuat atau menimpa file `user_statistic.csv` dan menuliskan `Username,INFO,ERROR`.
+
+```bash
 for key in "${!userErrors[@]}" "${!userInfo[@]}"
 do
 	printf "%s,%d,%d\n" "$key" "${userInfo[$key]}" "${userErrors[$key]}" 
 done | sort -u >> user_statistic.csv
-
-cat error_message.csv
-cat user_statistic.csv
 ```
+Juga mirip seperti sebelumnya tetapi di kode ini akan melakukan loop untuk setiap key di 2 array, yaitu `userErrors` dan `userInfo`, dan menuliskan nilai dari `$key`, `${userInfo[$key]}`, `${userErrors[$key]}`. Hal ini dilakukan agar bila ada username yang hanya mempunyai log bertipe INFO atau ERROR saja tetap akan tertulis. Kemudian hasil dari loop akan di-sort dan ditambahkan ke file `user_statistic.csv`. Karena username bisa saja mempunyai log INFO dan ERROR dan menghasilkan baris yang sama, maka perlu menambah option `-u` di sort untuk menghapus baris yang duplikat.
 
 ## Soal 2
 ### Penjelasan soal

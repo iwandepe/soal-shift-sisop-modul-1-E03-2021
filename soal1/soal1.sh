@@ -30,6 +30,3 @@ for key in "${!userErrors[@]}" "${!userInfo[@]}"
 do
 	printf "%s,%d,%d\n" "$key" "${userInfo[$key]}" "${userErrors[$key]}" 
 done | sort -u >> user_statistic.csv
-
-cat error_message.csv
-cat user_statistic.csv
