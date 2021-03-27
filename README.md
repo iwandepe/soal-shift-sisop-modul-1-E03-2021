@@ -9,6 +9,43 @@ Ryujin baru saja diterima sebagai IT support di perusahaan Bukapedia. Dia diberi
 1. Semua informasi yang didapatkan pada poin b dituliskan ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak.
 1. Semua informasi yang didapatkan pada poin c dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.
 #### Penyelesaian
+```bash
+#!/bin/bash
+
+file="./syslog.log"
+regex='.+: (INFO|ERROR) (.+) \((.+)\)'
+declare -A errors
+declare -A userErrors
+declare -A userInfo
+
+while read -r line
+do
+	[[ $line =~ $regex ]]
+
+	if [[ ${BASH_REMATCH[1]} == "ERROR" ]]
+	then
+		((errors['${BASH_REMATCH[2]}']++))
+		((userErrors['${BASH_REMATCH[3]}']++))
+	else
+		((userInfo['${BASH_REMATCH[3]}']++))
+	fi
+done < "$file"
+
+echo "Error,Count" > error_message.csv
+for key in "${!errors[@]}"
+do
+	printf "%s,%d\n" "$key" "${errors[$key]}" 
+done | sort -rn -t , -k 2 >> error_message.csv
+
+echo "Username,INFO,ERROR" > user_statistic.csv
+for key in "${!userErrors[@]}" "${!userInfo[@]}"
+do
+	printf "%s,%d,%d\n" "$key" "${userInfo[$key]}" "${userErrors[$key]}" 
+done | sort -u >> user_statistic.csv
+
+cat error_message.csv
+cat user_statistic.csv
+```
 
 ## Soal 2
 ### Penjelasan soal
@@ -103,3 +140,129 @@ Kuuhaku adalah orang yang sangat suka mengoleksi foto-foto digital, namun Kuuhak
 1. Agar kuuhaku tidak bosan dengan gambar anak kucing, ia juga memintamu untuk mengunduh gambar kelinci dari "https://loremflickr.com/320/240/bunny". Kuuhaku memintamu mengunduh gambar kucing dan kelinci secara bergantian (yang pertama bebas. contoh : tanggal 30 kucing > tanggal 31 kelinci > tanggal 1 kucing > ... ). Untuk membedakan folder yang berisi gambar kucing dan gambar kelinci, nama folder diberi awalan "Kucing_" atau "Kelinci_" (contoh : "Kucing_13-03-2023").
 1. Untuk mengamankan koleksi Foto dari Steven, Kuuhaku memintamu untuk membuat script yang akan memindahkan seluruh folder ke zip yang diberi nama “Koleksi.zip” dan mengunci zip tersebut dengan password berupa tanggal saat ini dengan format "MMDDYYYY" (contoh : “03032003”).
 1. Karena kuuhaku hanya bertemu Steven pada saat kuliah saja, yaitu setiap hari kecuali sabtu dan minggu, dari jam 7 pagi sampai 6 sore, ia memintamu untuk membuat koleksinya ter-zip saat kuliah saja, selain dari waktu yang disebutkan, ia ingin koleksinya ter-unzip dan tidak ada file zip sama sekali.
+
+### Penyelesaian
+**1. soal 3a**
+```bash
+#!/bin/bash
+
+ > Foto.log
+for((i=1;i<24;i++))
+        do wget https://loremflickr.com/320/240/kitten -O Koleksi_$i -a Foto.log
+done
+
+for ((i=1;i<24;i++))
+	do for ((j=i+1;j<24;j++))
+		do if cmp Koleksi_$i Koleksi_$j &> /dev/null
+		then rm Koleksi_$j
+fi
+done
+done
+
+for ((i=1;i<24;i++))
+do if [ ! -f Koleksi_$i ]
+	then for ((j=23;i<j;j--))
+		do if [ -f Koleksi_$j ] 
+			then mv Koleksi_$j Koleksi_$i
+break
+fi done
+fi done
+
+for ((i=1;i<10;i++))
+do mv Koleksi_$i Koleksi_0$i
+done
+```
+
+**2. soal 3b**
+```bash
+#!/bin/bash
+
+mkdir $(date +%d-%m-%Y)
+ > Foto.log
+for((i=1;i<24;i++))
+        do wget https://loremflickr.com/320/240/kitten -O Koleksi_$i -a Foto.log
+done
+mv Foto.log $(date +%d-%m-%Y)
+
+for ((i=1;i<24;i++))
+	do for ((j=i+1;j<24;j++))
+		do if cmp Koleksi_$i Koleksi_$j &> /dev/null
+		then rm Koleksi_$j
+fi
+done
+done
+
+for ((i=1;i<24;i++))
+do if [ ! -f Koleksi_$i ]
+	then for ((j=23;i<j;j--))
+		do if [ -f Koleksi_$j ] 
+			then mv Koleksi_$j Koleksi_$i
+break
+fi done
+fi done
+
+for ((i=1;i<10;i++))
+	do mv Koleksi_$i Koleksi_0$i
+done
+
+mv Koleksi* $(date +%d-%m-%Y)
+```
+
+**3. soal 3c**
+```bash
+#!/bin/bash
+
+kel=$(find /home/vika -type d -name 'Kelinci_*' | wc -l)
+kuc=$(find /home/vika -type d -name 'Kucing_*' | wc -l)
+
+> Foto.log
+
+if [ $kuc == $kel ]
+then
+mkdir Kucing_$(date +%d-%m-%Y)
+	for ((i=1;i<24;i++))
+	do wget https://loremflickr.com/320/240/kitten -O Koleksi_$i -a Foto.log;done
+	mv Foto.log Kucing_$(date +%d-%m-%Y)
+
+elif [ $kuc > $kel ]
+then
+mkdir Kelinci_$(date +%d-%m-%Y)
+	for ((i=1;i<24;i++))
+	do wget https://loremflickr.com/320/240/bunny -O Koleksi_$i -a Foto.log;done
+	mv Foto.log Kelinci_$(date +%d-%m-%Y)
+fi
+
+for ((i=1;i<24;i++))
+	do for ((j=i+1;j<24;j++))
+		do if cmp Koleksi_$i Koleksi_$j &> /dev/null;
+		then rm Koleksi_$j
+fi;done;done
+
+for ((i=1;i<24;i++))
+	do if [ ! -f Koleksi_$i ]
+	then for ((j=23;i<j;j--))
+		do if [ -f Koleksi_$j ]
+		then mv Koleksi_$j Koleksi_$i
+break;fi;done;fi;done
+
+for ((i=1;i<10;i++))
+	do mv Koleksi_$i Koleksi_0$i
+done
+
+if [ $kuc == $kel ]
+	then mv Koleksi_* Kucing_$(date +%d-%m-%Y)
+elif [ $kuc > $kel ]
+	then mv Koleksi_* Kelinci_$(date +%d-%m-%Y)
+fi
+```
+
+**4. soal 3d**
+```bash
+#!/bin/bash
+
+pass=$(date +"%m%d%Y")
+
+for folder in K*_*
+do zip -q -r -P $pass Koleksi.zip $folder
+rm -r $folder
+done```
