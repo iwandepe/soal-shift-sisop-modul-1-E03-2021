@@ -23,6 +23,79 @@ Cost Price didapatkan dari pengurangan Sales dengan Profit. (Quantity diabaikan)
 1. TokoShiSop membagi wilayah bagian (region) penjualan menjadi empat bagian, antara lain: Central, East, South, dan West. Manis ingin mencari wilayah bagian (region) yang memiliki total keuntungan (profit) paling sedikit dan total keuntungan wilayah tersebut.
 1. kamu diharapkan bisa membuat sebuah script yang akan menghasilkan file “hasil.txt” yang memiliki format sebagai berikut:
 
+### Penyelesaian
+```bash
+#!/bin/bash
+
+awk -F $'\t' '
+BEGIN {
+	max_percentage=0;
+} 
+NR > 1{
+	percentage=$21/($18-$21)*100; 
+	if (max_percentage<=percentage) {
+		max_percentage=percentage; 
+		order_id=$2;
+	}
+} 
+END {
+	print "Transaksi terakhir dengan profit percentage terbesar yaitu", order_id, "dengan persentase", max_percentage"%"
+}
+' Laporan-TokoShiSop.tsv >> hasil.txt
+
+echo '' >> hasil.txt
+
+awk -F $'\t' '
+BEGIN {
+	print("Daftar nama customer di Albuquerque pada tahun 2017 antara lain: ")
+}
+/2017/ {
+	if ($10=="Albuquerque") print $7
+}
+' Laporan-TokoShiSop.tsv | uniq >> hasil.txt
+
+echo '' >> hasil.txt
+
+awk -F $'\t' '
+BEGIN {
+	min=1000000; 
+	min_segment='null'
+} 
+NR > 1 {
+	arr[$8]+=$19;
+} 
+END {
+	for(a in arr) {
+		if (arr[a]<min) { 
+			min=arr[a]; 
+			min_segment=a
+		}
+	} 
+	print "Tipe segment customer yang penjualannya paling sedikit adalah", min_segment, "dengan",  min, "transaksi"
+}
+' Laporan-TokoShiSop.tsv >> hasil.txt
+
+echo '' >> hasil.txt
+
+awk -F $'\t' '
+BEGIN {
+	min_profit=99999999; 
+} 
+NR > 1{
+	arr[$13]+=$21;
+} 
+END {
+	for(a in arr) {
+		if (arr[a]<min_profit) { 
+
+			min_profit=arr[a]; 
+			min_region=a;
+		}
+	} 
+	print "Wilayah bagian (region) yang memiliki total keuntungan (profit) yang paling sedikit adalah",  min_region, "dengan total keuntungan ", min_profit
+}
+' Laporan-TokoShiSop.tsv >> hasil.txt
+```
 ## Soal 3
 Kuuhaku adalah orang yang sangat suka mengoleksi foto-foto digital, namun Kuuhaku juga merupakan seorang yang pemalas sehingga ia tidak ingin repot-repot mencari foto, selain itu ia juga seorang pemalu, sehingga ia tidak ingin ada orang yang melihat koleksinya tersebut, sayangnya ia memiliki teman bernama Steven yang memiliki rasa kepo yang luar biasa. Kuuhaku pun memiliki ide agar Steven tidak bisa melihat koleksinya, serta untuk mempermudah hidupnya, yaitu dengan meminta bantuan kalian. Idenya adalah :
 1. Membuat script untuk mengunduh 23 gambar dari "https://loremflickr.com/320/240/kitten" serta menyimpan log-nya ke file "Foto.log". Karena gambar yang diunduh acak, ada kemungkinan gambar yang sama terunduh lebih dari sekali, oleh karena itu kalian harus menghapus gambar yang sama (tidak perlu mengunduh gambar lagi untuk menggantinya). Kemudian menyimpan gambar-gambar tersebut dengan nama "Koleksi_XX" dengan nomor yang berurutan tanpa ada nomor yang hilang (contoh : Koleksi_01, Koleksi_02, ...)
