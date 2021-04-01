@@ -283,7 +283,9 @@ a.	mengunduh dari tanggal 1 tujuh hari sekali (1,8,...) setiap jam 8 malam :
 b.	mengunduh dari tanggal 2 empat hari sekali (2,6,10,...) setiap jam 8 malam :
 	crontab : `0 20 2-31/4 * * bash /home/vika/soal3b.sh`
 
-![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/3b.jpg)
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/3b_1.jpg)
+
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/3b_2.jpg)
 	
 **3. soal 3c**
 
