@@ -260,6 +260,8 @@ done
 ```
 ini berfungsi untuk mengubah nama file yang urutan 1 sampai 9 dengan menambahkan 0 didepan urutannya `mv Koleksi_$i Koleksi_0$i`seperti dari Koleksi_1 menjadi Koleksi_01
 
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/3a.jpg)
+
 **2. soal 3b**
 ```bash
 #!/bin/bash
@@ -342,6 +344,8 @@ a.	mengunduh dari tanggal 1 tujuh hari sekali (1,8,...) setiap jam 8 malam :
 	crontab : `0 20 1-31/7 * * bash /home/vika/soal3b.sh`
 b.	mengunduh dari tanggal 2 empat hari sekali (2,6,10,...) setiap jam 8 malam :
 	crontab : `0 20 2-31/4 * * bash /home/vika/soal3b.sh`
+
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/3b.jpg)
 	
 **3. soal 3c**
 ```bash
@@ -451,7 +455,12 @@ fi
 ```
 jika jumlah folder kucing = folder kelinci maka gambar yang diunduh dipindahkan ke folder `Kucing_$(date +%d-%m-%Y)`, jika jumlah folder kucing lebih banyak maka file gambar akan dipindahkan ke folder `Kelinci_$(date +%d-%m-%Y)`
 
-*Dokumentasi*
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/3c.jpg)
+
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/3c_IsiFolderKucing.jpg)
+
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/3c_IsiFolderKelinci.jpg)
+
 
 **4. soal 3d**
 ```bash
@@ -467,12 +476,18 @@ done
 ***Penjelasan***
 membuat password dengan format MMDDYYYY, lalu untuk folder-folder yang berformat K dan _ akan dizip dengan password tanggal saat ini dan menghapus foldernya
 
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/3d_KoleksiZip.jpg)
+
 **5. soal 3e**
 untuk crontab 3e saat melakukan zip pada jam 7 setiap hari Senin-Jumat: 
 `0 7 * * 1-5 bash /home/vika/soal3d.sh`
 
 dan untuk crontab melakukan unzip pada jam 6 sore setiap Hari Senin-Jumat dengan password berformat tanggal saat melakukan zip dan menghapus file zipnya:
 `0 18 * * 1-5 cd /home/vika/ && unzip -P $(date +"\%m\%d\%Y") Koleksi.zip && rm Koleksi.zip`
+
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/3e_Zip.jpg)
+
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/3e_Unzip.jpg)
 
 ### Kendala
 1. belum terbiasa dengan bash script
