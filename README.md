@@ -223,14 +223,15 @@ for ((i=1;i<10;i++))
 do mv Koleksi_$i Koleksi_0$i
 done
 ```
-pertama membuat file dengan nama Foto.log yang nantinya akan menyimpan log dari mengunduh 23 gambar.
 
-```> Foto.log
+`> Foto.log` membuat file dengan nama Foto.log yang nantinya akan digunakan menyimpan log dari mengunduh 23 gambar.
+
+```
 for((i=1;i<24;i++))
         do wget https://loremflickr.com/320/240/kitten -O Koleksi_$i -a Foto.log
 done
 ```
-loop ini  untuk mengunduhh gambar dari link sebanyak 23 kali dan memberi nama Koleksi_i. i disini sesuai urutan pengunduhan dan menyimpan lognya ke file Foto.log
+loop ini  untuk mengunduhh gambar  dengan `wget`dari link https://loremflickr.com/320/240/kitten sebanyak 23 kali dan `-O` untuk memberi nama gambar dengan Koleksi_i. i disini sesuai urutan pengunduhan. Lalu `-a Foto.log` untuk menyimpan lognya ke file Foto.log
 
 ```for ((i=1;i<24;i++))
 	do for ((j=i+1;j<24;j++))
@@ -240,7 +241,7 @@ fi
 done
 done
 ```
-loop kedua ini untuk mengecek apakah ada gambar yang sama saat kita mengunduh, disini saya menggunakan cmp. Jika ada yang sama maka gambar yang urutannya paling besar akan dihapus
+loop kedua ini untuk mengecek apakah ada gambar yang sama saat kita mengunduh, disini saya menggunakan `cmp`. Jika ada yang sama maka gambar yang urutannya paling besar akan dihapus menggunakan `rm`.
 
 ```for ((i=1;i<24;i++))
 do if [ ! -f Koleksi_$i ]
@@ -251,13 +252,13 @@ break
 fi done
 fi done
 ```
-loop ini  mengecek adakah urutan yang hilang lalu mereplace urutan angka yang hilang tersebut. jadi jika ada urutan yang hilang, urutan setelahnya akan menggantikan begitu seterusnya.
+loop ini  mengecek adakah urutan yang hilang  dengan `if [ ! -f Koleksi_$i ]` . Jika ada maka mengecek file dari urutan paling belakang `if [ -f Koleksi_$j ] ` untuk mereplace  ata menggantikan urutan angka yang hilang tersebut `then mv Koleksi_$j Koleksi_$i`.
 
 ```for ((i=1;i<10;i++))
 do mv Koleksi_$i Koleksi_0$i
 done
 ```
-ini berfungsi untuk mengubah nama file yang urutan 1 sampai sembilan dengan menambahkan 0 didepan urutannya
+ini berfungsi untuk mengubah nama file yang urutan 1 sampai 9 dengan menambahkan 0 didepan urutannya `mv Koleksi_$i Koleksi_0$i`seperti dari Koleksi_1 menjadi Koleksi_01
 
 **2. soal 3b**
 ```bash
@@ -297,16 +298,15 @@ mv Koleksi* $(date +%d-%m-%Y)
 ```mkdir $(date +%d-%m-%Y)
  > Foto.log
  ```
-pertama membuat file dengan nama Foto.log yang nantinya akan menyimpan log dari mengunduh 23 gambar dan membuat folder untuk menyimpan foto.log dan gambar unduhan
+pertama ` > Foto.log` membuat file dengan nama Foto.log yang nantinya akan menyimpan log dari mengunduh 23 gambar dan membuat folder `mkdir $(date +%d-%m-%Y)`untuk menyimpan foto.log dan gambar unduhan dengan format nama folder adalah tanggal mengunduh
 
-```> Foto.log
+```
 for((i=1;i<24;i++))
         do wget https://loremflickr.com/320/240/kitten -O Koleksi_$i -a Foto.log
 done
 mv Foto.log $(date +%d-%m-%Y)
 ```
-loop ini  untuk mengunduhh gambar dari link sebanyak 23 kali dan memberi nama Koleksi_i. i disini sesuai urutan pengunduhan dan menyimpan lognya ke file Foto.log
-file Foto.log lalu dipindahkan ke folder berfromat sesuai tanggal
+loop ini  untuk mengunduhh gambar  dengan `wget`dari link https://loremflickr.com/320/240/kitten sebanyak 23 kali dan `-O` untuk memberi nama gambar dengan Koleksi_i. i disini sesuai urutan pengunduhan. Lalu `-a Foto.log` untuk menyimpan lognya ke file Foto.log lalu dipindahkan ke folder berformat sesuai tanggal`mv Foto.log $(date +%d-%m-%Y`
 
 ```for ((i=1;i<24;i++))
 	do for ((j=i+1;j<24;j++))
@@ -316,7 +316,7 @@ fi
 done
 done
 ```
-loop kedua ini untuk mengecek apakah ada gambar yang sama saat kita mengunduh, disini saya menggunakan cmp. Jika ada yang sama maka gambar yang urutannya paling besar akan dihapus
+loop kedua ini untuk mengecek apakah ada gambar yang sama saat kita mengunduh, disini saya menggunakan `cmp`. Jika ada yang sama maka gambar yang urutannya paling besar akan dihapus`then rm Koleksi_$j`
 
 ```for ((i=1;i<24;i++))
 do if [ ! -f Koleksi_$i ]
@@ -327,7 +327,7 @@ break
 fi done
 fi done
 ```
-loop ini  mengecek adakah urutan yang hilang lalu mereplace urutan angka yang hilang tersebut. jadi jika ada urutan yang hilang, urutan setelahnya akan menggantikan begitu seterusnya.
+loop ini  mengecek adakah urutan yang hilang  dengan `if [ ! -f Koleksi_$i ]` . Jika ada maka mengecek file dari urutan paling belakang `if [ -f Koleksi_$j ] ` untuk mereplace  atau menggantikan urutan angka yang hilang tersebut `then mv Koleksi_$j Koleksi_$i`.
 
 ```for ((i=1;i<10;i++))
 do mv Koleksi_$i Koleksi_0$i
@@ -335,8 +335,14 @@ done
 
 mv Koleksi* $(date +%d-%m-%Y)
 ```
-ini berfungsi untuk mengubah nama file yang urutan 1 sampai sembilan dengan menambahkan 0 didepan urutannya. dan meindahkan gambar unduhan yang memilki kata Koleksi ke folder yang berformat tanggal
+ini berfungsi untuk mengubah nama file yang urutan 1 sampai 9 dengan menambahkan 0 didepan urutannya `mv Koleksi_$i Koleksi_0$i`seperti dari Koleksi_1 menjadi Koleksi_01 memindahkan gambar unduhan yang memilki kata depan Koleksi ke folder yang berformat tanggal yang telah dibuat sebelumnya `mv Koleksi* $(date +%d-%m-%Y)`
 
+untuk crontab 3e :
+a.	mengunduh dari tanggal 1 tujuh hari sekali (1,8,...) setiap jam 8 malam :
+	crontab : `0 20 1-31/7 * * bash /home/vika/soal3b.sh`
+b.	mengunduh dari tanggal 2 empat hari sekali (2,6,10,...) setiap jam 8 malam :
+	crontab : `0 20 2-31/4 * * bash /home/vika/soal3b.sh`
+	
 **3. soal 3c**
 ```bash
 #!/bin/bash
@@ -390,7 +396,7 @@ fi
 kuc=$(find /home/vika -type d -name 'Kucing_*' | wc -l)
 > Foto.log
 ```
-mengecek jumlah folder  yang mengandung nama kelinci ataupun kucing di home. serta membuat file foto.log
+mengecek jumlah `wc -l` folder yang mengandung nama kelinci ataupun kucing di home. serta membuat file foto.log
 
 ```
 if [ $kuc == $kel ]
@@ -408,7 +414,7 @@ mkdir Kelinci_$(date +%d-%m-%Y)
 	mv Foto.log Kelinci_$(date +%d-%m-%Y)
 fi
 ```
-jika banyaknya folder kucing sama dengan kelinci maka akan membuat folder kucing_tanggal dan mendownload gambar (seperti no 3a--3b), jika banyaknya kucing lebih besar dari pada banyaknya folder kelinci mmaka akan membuat folder kelinci_tanggal dan mendownload gambar (seperti no 3a--3b)
+jika banyaknya folder kucing sama dengan kelinci maka akan membuat folder `Kucing_$(date +%d-%m-%Y)` dan mendownload gambar (seperti no 3b), jika banyaknya kucing lebih besar dari pada banyaknya folder kelinci mmaka akan membuat folder `Kelinci_$(date +%d-%m-%Y)` dan mendownload gambar (seperti no 3b). 
 
 ```for ((i=1;i<24;i++))
 	do for ((j=i+1;j<24;j++))
@@ -418,7 +424,7 @@ fi
 done
 done
 ```
-loop kedua ini untuk mengecek apakah ada gambar yang sama saat kita mengunduh, disini saya menggunakan cmp. Jika ada yang sama maka gambar yang urutannya paling besar akan dihapus
+loop kedua ini untuk mengecek apakah ada gambar yang sama saat kita mengunduh, disini saya menggunakan `cmp`. Jika ada yang sama maka gambar yang urutannya paling besar akan dihapus `rm Koleksi_$j`
 
 ```for ((i=1;i<24;i++))
 do if [ ! -f Koleksi_$i ]
@@ -429,13 +435,13 @@ break
 fi done
 fi done
 ```
-loop ini  mengecek adakah urutan yang hilang lalu mereplace urutan angka yang hilang tersebut. jadi jika ada urutan yang hilang, urutan setelahnya akan menggantikan begitu seterusnya.
+loop ini  mengecek adakah urutan yang hilang  dengan `if [ ! -f Koleksi_$i ]` . Jika ada maka mengecek file dari urutan paling belakang `if [ -f Koleksi_$j ] ` untuk mereplace  ata menggantikan urutan angka yang hilang tersebut `then mv Koleksi_$j Koleksi_$i`.
 
 ```for ((i=1;i<10;i++))
 	do mv Koleksi_$i Koleksi_0$i
 done
 ```
-untuk mengganti nama gambar urutan 1--9 dengan memnambahkan 0 sebelum angka urutannya
+ini berfungsi untuk mengubah nama file yang urutan 1 sampai 9 dengan menambahkan 0 didepan urutannya `mv Koleksi_$i Koleksi_0$i`seperti dari Koleksi_1 menjadi Koleksi_01 memindahkan gambar unduhan yang memilki kata depan Koleksi ke folder yang berformat tanggal yang telah dibuat sebelumnya `mv Koleksi* $(date +%d-%m-%Y)`
 
 ```if [ $kuc == $kel ]
 	then mv Koleksi_* Kucing_$(date +%d-%m-%Y)
@@ -443,7 +449,7 @@ elif [ $kuc > $kel ]
 	then mv Koleksi_* Kelinci_$(date +%d-%m-%Y)
 fi
 ```
-jika jumlah folder kucing = folder kelinci maka gambar yang diunduh dipindahkan di kelinci, jika jumlah folder kucing lebih banyak maka file gambar akan dipindahkan di folder kelinci
+jika jumlah folder kucing = folder kelinci maka gambar yang diunduh dipindahkan ke folder `Kucing_$(date +%d-%m-%Y)`, jika jumlah folder kucing lebih banyak maka file gambar akan dipindahkan ke folder `Kelinci_$(date +%d-%m-%Y)`
 
 **4. soal 3d**
 ```bash
@@ -458,3 +464,16 @@ done
 ```
 ***Penjelasan***
 membuat password dengan format MMDDYYYY, lalu untuk folder-folder yang berformat K dan _ akan dizip dengan password tanggal saat ini dan menghapus foldernya
+
+**5. soal 3e**
+untuk crontab 3e saat melakukan zip pada jam 7 setiap hari Senin-Jumat: 
+`0 7 * * 1-5 bash /home/vika/soal3d.sh`
+
+dan untuk crontab melakukan unzip pada jam 6 sore setiap Hari Senin-Jumat dengan password berformat tanggal saat melakukan zip dan menghapus file zipnya:
+`0 18 * * 1-5 cd /home/vika/ && unzip -P $(date +"\%m\%d\%Y") Koleksi.zip && rm Koleksi.zip`
+
+### Kendala
+1. belum terbiasa dengan bash script
+2. sempat mengalami error karna format crontab yang kurang valid
+3. saat menghitung folder kucing dan kelinci sempat error karena  yang di 'trash' juga ikut terhitung jadi mengalami ketidaksesuaian membuat dan mengunduh file nya
+4. sempat error saat membandingkan file yang sama
