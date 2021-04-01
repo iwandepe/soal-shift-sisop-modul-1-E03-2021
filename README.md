@@ -451,6 +451,9 @@ fi
 ```
 jika jumlah folder kucing = folder kelinci maka gambar yang diunduh dipindahkan ke folder `Kucing_$(date +%d-%m-%Y)`, jika jumlah folder kucing lebih banyak maka file gambar akan dipindahkan ke folder `Kelinci_$(date +%d-%m-%Y)`
 
+*Dokumentasi*
+￼
+
 **4. soal 3d**
 ```bash
 #!/bin/bash
