@@ -111,7 +111,7 @@ END {
 }
 ' Laporan-TokoShiSop.tsv >> hasil.txt
 ```
-Pada soal nomor 2a diminta untuk mencari order dengan persentase keuntungan terbesar. Hal ini diselesaikan dengan awk. Pertama diinisialisasikan tersebih dahulu max_percentage=0. Lalu mengecek file laporan pada setiap baris, jika ditemukan persentase keuntungan yang lebih besar maka data order dan max_percentage akan diupdate. Selanjutnya ketika program sudah mengecek semua baris, akan dicetak output berupa row_ID dan persentase keuntungannya. Kode NR>1 menunjukkan bahwa program hanya akan mengecek laporan mulai dari baris kedua, karena pada baris pertama berisi keterangan dari kolom.
+Pada soal nomor 2a diminta untuk mencari order dengan persentase keuntungan terbesar. Hal ini diselesaikan dengan awk. Pertama diinisialisasikan tersebih dahulu max_percentage=0. Lalu mengecek file laporan pada setiap baris, jika ditemukan persentase keuntungan yang lebih besar maka data order dan max_percentage akan diupdate. Selanjutnya ketika program sudah mengecek semua baris, akan dicetak output berupa Row ID dan persentase keuntungannya. Kode NR>1 menunjukkan bahwa program hanya akan mengecek laporan mulai dari baris kedua, karena pada baris pertama berisi keterangan dari kolom.
 
 **Soal 2b**
 ```bash
@@ -180,7 +180,11 @@ Pada soal nomor 2d diminta untk mencar wilayah dengan total keuntungan paling se
 ![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/2_output.jpg)
 
 ### Kendala
-Belum terbiasa dengan bash script. Sempat mengalami error karena tidak menspesifikkan separator dengan '\t' sehingga data yang diambil jadi salah.
+1. Belum terbiasa dengan bash script
+1. Sempat mengalami error karena tidak menspesifikkan separator dengan '\t' sehingga data yang diambil jadi salah.
+1. Perlu melakukan revisi pada 2a karena tidak teliti membaca soal. Soal mengeluarkan Row ID tapi program mengeluarkan Order ID
+1. Perlu melakukan revisi pada 2b karena list nama sudah benar tapi dengan urutan yang masih salah
+1. Perlu melakukan revisi pada 2c karena tidak teliti membaca soal. Soal meminta jumlah transaksi tapi program mengeluarkan total kuantitas barang dari transaksi
 
 ## Soal 3
 Kuuhaku adalah orang yang sangat suka mengoleksi foto-foto digital, namun Kuuhaku juga merupakan seorang yang pemalas sehingga ia tidak ingin repot-repot mencari foto, selain itu ia juga seorang pemalu, sehingga ia tidak ingin ada orang yang melihat koleksinya tersebut, sayangnya ia memiliki teman bernama Steven yang memiliki rasa kepo yang luar biasa. Kuuhaku pun memiliki ide agar Steven tidak bisa melihat koleksinya, serta untuk mempermudah hidupnya, yaitu dengan meminta bantuan kalian. Idenya adalah :
