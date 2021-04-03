@@ -103,15 +103,13 @@ NR > 1{
 	percentage=$21/($18-$21)*100; 
 	if (max_percentage<=percentage) {
 		max_percentage=percentage; 
-		order_id=$2;
+		order_id=$1;
 	}
-} 
+}
 END {
 	print "Transaksi terakhir dengan profit percentage terbesar yaitu", order_id, "dengan persentase", max_percentage"%"
 }
 ' Laporan-TokoShiSop.tsv >> hasil.txt
-
-echo '' >> hasil.txt
 ```
 Pada soal nomor 2a dicari order dengan persentase keuntungan terbesar. Hal ini dapat diselesaikan dengan awk, pertama diinisialisasikan tersebih dahulu max_percentage=0. Lalu mengecek file laporan pada setiap baris, jika ditemukan persentase keuntungan yang lebih besar, maka data akan diubah. Selanjutnya ketika program sudah mengecek semua baris, akan dioutputkan order id dan persentase keuntungannya. Kode NR>1 menunjukkan bahwa program hanya akan mengecek laporan mulai dari baris kedua, karena pada baris pertama berisi keterangan dari kolom.
 
@@ -122,11 +120,14 @@ BEGIN {
 	print("Daftar nama customer di Albuquerque pada tahun 2017 antara lain: ")
 }
 /2017/ {
-	if ($10=="Albuquerque") print $7
+	# if ($10=="Albuquerque") print $7
+	if ($10=="Albuquerque") arr[$7]=1
+}
+END {
+	for (a in arr) 
+		print a;
 }
 ' Laporan-TokoShiSop.tsv | uniq >> hasil.txt
-
-echo '' >> hasil.txt
 ```
 Pada soal nomor 2b dicari nama customer yang membuat order di Albuquerque pada tahun 2017. Penyelesaian dilakukan dengan mengecek pada setiap baris, jika ada yang memiliki nilai 2017 (menunjukkan order dilakukan pada tahun 2017) dan memiliki tempat di Albuqueque maka akan di-print nama customer pada baris tersebut.
 
@@ -138,7 +139,8 @@ BEGIN {
 	min_segment='null'
 } 
 NR > 1 {
-	arr[$8]+=$19;
+	# arr[$8]+=$19;
+	arr[$8]++;
 } 
 END {
 	for(a in arr) {
@@ -150,8 +152,6 @@ END {
 	print "Tipe segment customer yang penjualannya paling sedikit adalah", min_segment, "dengan",  min, "transaksi"
 }
 ' Laporan-TokoShiSop.tsv >> hasil.txt
-
-echo '' >> hasil.txt
 ```
 Pada soal nomor 2c dicari segment dengan nilai transaksi minimum. Penyelesaian dilakukan dengan menginisialisasi terlebih dahulu variabel min dengan nilai yang besar. Selanjutnya pada setiap baris data akan diakumulasikan nilai dari jumlah transaksi dari setiap value lalu dimasukkan ke dalam sebuah array. Pada akhir program, akan dicek segment mana yang memiliki jumlah transaksi paling minimum lalu hasilnya dicetak sesuai perintah soal.
 
@@ -179,7 +179,7 @@ END {
 Pada soal nomor 2d dicari wilayah dengan total keuntungan paling sedikit. Penyelaian dilakukan dengan menginisialisasi terlebih dahulu nilai min_profit dengan nilai yang cukup besar. Lalu pada setiap baris data akan diakumulasikan keuntungan dari tiap wilayah dan dimasukkan ke dalam sebuah array. Pada akhir program, akan dicari dengan looping wilayah mana dalam array yang memilliki jumlah profit paling minimal, lalu hasilnya dicetak sesuai permintaan soal.
 
 ### Snapshot hasil
-![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/ss-output-nomer2.png)
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/2_output.png)
 
 ### Kendala
 Belum terbiasa dengan bash script. Sempat mengalami error karena tidak menspesifikkan separator dengan '\t' sehingga data yang diambil jadi salah.
