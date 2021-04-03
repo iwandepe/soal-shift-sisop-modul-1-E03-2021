@@ -111,7 +111,7 @@ END {
 }
 ' Laporan-TokoShiSop.tsv >> hasil.txt
 ```
-Pada soal nomor 2a dicari order dengan persentase keuntungan terbesar. Hal ini dapat diselesaikan dengan awk, pertama diinisialisasikan tersebih dahulu max_percentage=0. Lalu mengecek file laporan pada setiap baris, jika ditemukan persentase keuntungan yang lebih besar, maka data akan diubah. Selanjutnya ketika program sudah mengecek semua baris, akan dioutputkan order id dan persentase keuntungannya. Kode NR>1 menunjukkan bahwa program hanya akan mengecek laporan mulai dari baris kedua, karena pada baris pertama berisi keterangan dari kolom.
+Pada soal nomor 2a diminta untuk mencari order dengan persentase keuntungan terbesar. Hal ini diselesaikan dengan awk. Pertama diinisialisasikan tersebih dahulu max_percentage=0. Lalu mengecek file laporan pada setiap baris, jika ditemukan persentase keuntungan yang lebih besar maka data order dan max_percentage akan diupdate. Selanjutnya ketika program sudah mengecek semua baris, akan dicetak output berupa row_ID dan persentase keuntungannya. Kode NR>1 menunjukkan bahwa program hanya akan mengecek laporan mulai dari baris kedua, karena pada baris pertama berisi keterangan dari kolom.
 
 **Soal 2b**
 ```bash
@@ -120,7 +120,6 @@ BEGIN {
 	print("Daftar nama customer di Albuquerque pada tahun 2017 antara lain: ")
 }
 /2017/ {
-	# if ($10=="Albuquerque") print $7
 	if ($10=="Albuquerque") arr[$7]=1
 }
 END {
@@ -129,7 +128,7 @@ END {
 }
 ' Laporan-TokoShiSop.tsv | uniq >> hasil.txt
 ```
-Pada soal nomor 2b dicari nama customer yang membuat order di Albuquerque pada tahun 2017. Penyelesaian dilakukan dengan mengecek pada setiap baris, jika ada yang memiliki nilai 2017 (menunjukkan order dilakukan pada tahun 2017) dan memiliki tempat di Albuqueque maka akan di-print nama customer pada baris tersebut.
+Pada soal nomor 2b dicari nama customer yang membuat order di Albuquerque pada tahun 2017. Penyelesaian dilakukan dengan mengecek pada setiap baris dengan menggunakan command awk, jika ada yang memiliki nilai 2017 (menunjukkan order dilakukan pada tahun 2017) dan memiliki tempat di Albuqueque maka nama customer akan disimpan pada sebuah array. Lalu ketika pengecekan tiap baris sudah selesai, akan dikeluarkan nama customer pada array tersebut.
 
 **Soal 2c**
 ```bash
@@ -139,7 +138,6 @@ BEGIN {
 	min_segment='null'
 } 
 NR > 1 {
-	# arr[$8]+=$19;
 	arr[$8]++;
 } 
 END {
@@ -153,7 +151,7 @@ END {
 }
 ' Laporan-TokoShiSop.tsv >> hasil.txt
 ```
-Pada soal nomor 2c dicari segment dengan nilai transaksi minimum. Penyelesaian dilakukan dengan menginisialisasi terlebih dahulu variabel min dengan nilai yang besar. Selanjutnya pada setiap baris data akan diakumulasikan nilai dari jumlah transaksi dari setiap value lalu dimasukkan ke dalam sebuah array. Pada akhir program, akan dicek segment mana yang memiliki jumlah transaksi paling minimum lalu hasilnya dicetak sesuai perintah soal.
+Pada soal nomor 2c diminta untuk mencari segment dengan nilai transaksi yang paling minimum. Penyelesaian dilakukan dengan menginisialisasi terlebih dahulu variabel min dengan nilai yang besar. Selanjutnya pada setiap baris data akan diakumulasikan jumlah transaksi dari setiap value lalu dimasukkan ke dalam sebuah array. Pada akhir program, akan dicek segment mana yang memiliki jumlah transaksi paling minimum lalu hasilnya dicetak sesuai perintah soal.
 
 **Soal 2d**
 ```bash
@@ -176,7 +174,7 @@ END {
 }
 ' Laporan-TokoShiSop.tsv >> hasil.txt
 ```
-Pada soal nomor 2d dicari wilayah dengan total keuntungan paling sedikit. Penyelaian dilakukan dengan menginisialisasi terlebih dahulu nilai min_profit dengan nilai yang cukup besar. Lalu pada setiap baris data akan diakumulasikan keuntungan dari tiap wilayah dan dimasukkan ke dalam sebuah array. Pada akhir program, akan dicari dengan looping wilayah mana dalam array yang memilliki jumlah profit paling minimal, lalu hasilnya dicetak sesuai permintaan soal.
+Pada soal nomor 2d diminta untk mencar wilayah dengan total keuntungan paling sedikit. Penyelaian dilakukan dengan menginisialisasi terlebih dahulu nilai min_profit dengan nilai yang cukup besar. Lalu pada setiap baris data akan diakumulasikan keuntungan dari tiap wilayah dan dimasukkan ke dalam sebuah array. Pada akhir program, akan dicari wilayah dalam array yang memilliki jumlah profit paling minimal, lalu hasilnya dicetak sesuai permintaan soal.
 
 ### Snapshot hasil
 ![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/2_output.jpg)
