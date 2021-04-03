@@ -179,7 +179,7 @@ END {
 Pada soal nomor 2d dicari wilayah dengan total keuntungan paling sedikit. Penyelaian dilakukan dengan menginisialisasi terlebih dahulu nilai min_profit dengan nilai yang cukup besar. Lalu pada setiap baris data akan diakumulasikan keuntungan dari tiap wilayah dan dimasukkan ke dalam sebuah array. Pada akhir program, akan dicari dengan looping wilayah mana dalam array yang memilliki jumlah profit paling minimal, lalu hasilnya dicetak sesuai permintaan soal.
 
 ### Snapshot hasil
-![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/2_output.png)
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/2_output.jpg)
 
 ### Kendala
 Belum terbiasa dengan bash script. Sempat mengalami error karena tidak menspesifikkan separator dengan '\t' sehingga data yang diambil jadi salah.
