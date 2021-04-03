@@ -77,6 +77,9 @@ done | sort -u >> user_statistic.csv
 ```
 Juga mirip seperti sebelumnya tetapi di kode ini akan melakukan loop untuk setiap key di 2 array, yaitu `userErrors` dan `userInfo`, dan menuliskan nilai dari `$key`, `${userInfo[$key]}`, `${userErrors[$key]}`. Hal ini dilakukan agar bila ada username yang hanya mempunyai log bertipe `INFO` atau `ERROR` saja tetap akan tertulis. Kemudian hasil dari loop akan di-sort dan ditambahkan ke file `user_statistic.csv`. Karena username bisa saja mempunyai log `INFO` dan `ERROR` sehingga menghasilkan baris yang sama, maka perlu menambah option `-u` di sort untuk menghapus baris yang duplikat.
 
+### Screenshot Setelah Dijalankan
+![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/1_output.png)
+
 ## Soal 2
 ### Penjelasan soal
 Steven dan Manis mendirikan sebuah startup bernama “TokoShiSop”. Sedangkan kamu dan Clemong adalah karyawan pertama dari TokoShiSop. Setelah tiga tahun bekerja, Clemong diangkat menjadi manajer penjualan TokoShiSop, sedangkan kamu menjadi kepala gudang yang mengatur keluar masuknya barang.
