@@ -80,6 +80,10 @@ Juga mirip seperti sebelumnya tetapi di kode ini akan melakukan loop untuk setia
 ### Screenshot Setelah Dijalankan
 ![alt text](https://github.com/iwandepe/soal-shift-sisop-modul-1-E03-2021/blob/master/1_output.png)
 
+### Kendala
+1. Belum terbiasa dengan bash script
+2. Sempat mengalami error karena ada jenis error di syslog.log yang mempunyai single quote (')
+
 ## Soal 2
 ### Penjelasan soal
 Steven dan Manis mendirikan sebuah startup bernama “TokoShiSop”. Sedangkan kamu dan Clemong adalah karyawan pertama dari TokoShiSop. Setelah tiga tahun bekerja, Clemong diangkat menjadi manajer penjualan TokoShiSop, sedangkan kamu menjadi kepala gudang yang mengatur keluar masuknya barang.
